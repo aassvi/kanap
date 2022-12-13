@@ -101,14 +101,19 @@ fetch(urlKanap)
 const button = document.querySelector('button');
 button.addEventListener('click', event => {
 
-   //récuperer les valeur  pour les mettre dans un object  
-   let objProduitPanier = {
-     idProduitPanier:id,
-     quantitéProduitPannier: quantity.textContent,
+  //récuperer les valeur  pour les mettre dans un object  
+  let objProduitPanier = {
+    idProduitPanier:id,
+    quantitéProduitPannier: quantity.textContent,
     colorProduitPanier:selectColor
-   }
-  
+  }
+  // on verifie si les donnes etaient deja presentes dans l'array pannier
+  // si oui id et color deja presents incremente la quatité
+  // si non enresgistrement des données dans array  push et sauvegarde en localstorage 
+  //if 
 
+  //else
+  
    //Créer un local storage  memorise l'object
    let objPannier = JSON.stringify(objProduitPanier);
    localStorage.setItem("obj",objPannier);
@@ -122,6 +127,7 @@ let objProduitPanier1 = JSON.parse(objPannier1);
 const test12 = console.log('localStorage'+ objProduitPanier1.quantitéProduitPannier); 
 const test14 = console.log('localStorage'+objProduitPanier1.idProduitPanier); 
 const test16 = console.log('localStorage'+objProduitPanier1. colorProduitPanier);
+//const test17 = console.log('localStorage'+objProduitPanier1.nomProduitPanier);
 
 
 

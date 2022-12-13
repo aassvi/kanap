@@ -8,8 +8,7 @@
 
 // function 
 
-function createKanap(kanap)
- {
+function createKanap(kanap) {
     // cherche la section pointe le curseur vers id= items et cree un link sur element global 
     document.getElementById('items'); 
 
