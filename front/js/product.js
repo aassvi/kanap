@@ -30,9 +30,9 @@ fetch(urlKanap)
     }
  })
 .then((data) =>{
-  const test1 = console.table(data.colors);
+   const test1 = console.table(data.colors);
 
-  /*image produit
+   /*image produit
    const myImg = document.getElementByClass("item");
    const test8 = console.log(myImg);
    // construction element enfant article image et attribut alt
@@ -46,17 +46,17 @@ fetch(urlKanap)
     // creation du lien enfant image et alt au parent article 
     article.append(img);
     article.appendChild(img);
-  */
-  //nom produit
-    const titleProduct = document.getElementById('title');
-    titleProduct.innerHTML = data.name;
-  //prix produit
+   */
+   //nom produit
+   const titleProduct = document.getElementById('title');
+   titleProduct.innerHTML = data.name;
+   //prix produit
    const prixProduct = document.getElementById('price');
    prixProduct.innerHTML = data.price;
-  //description produit
+   //description produit
    const descriptionProduct = document.getElementById('description');
    descriptionProduct.innerHTML = data.description;
-  //color produit
+   //color produit
    data.colors.forEach(function(color) {
      // cherche id colors
       const select = document.getElementById('colors');
@@ -68,18 +68,17 @@ fetch(urlKanap)
       myOption.append(myOption.value);
       select.appendChild(myOption);
        //recuperer le choix couleur de
-   
-      
+         
     });
 
     const selectElement = document.getElementById('colors');
     selectElement.addEventListener('change', (event) => {
-    selectElement.textContent= event.target.value;
-    const col1 = console.log( selectElement.textContent);
+    selectColor= event.target.value;
+    const col1 = console.log(selectColor);
+   
     });
 
-
-  //quantité produit
+    //quantité produit
     // cherche id quantity et garde la valeur choisie 
     const quantite = document.getElementById('quantity').value;
     //quantité variable
@@ -96,38 +95,41 @@ fetch(urlKanap)
       
 });
  
-//const test13 = console.log(objProduitPanier.colorProduitPanier); 
+
+
 //ajout dans le panier Ecouter le bouton 
 const button = document.querySelector('button');
-
 button.addEventListener('click', event => {
 
-// propagation
-
-const elt = document.getElementById('colors');    // On récupère l'élément sur lequel on veut détecter le clic
-elt.addEventListener('click', function(event) {     // On écoute l'événement click, notre callback prend un paramètre que nous avons appelé event ici
-    event.preventDefault();                         // On utilise la fonction preventDefault de notre objet event pour empêcher le comportement par défaut de cet élément lors du clic de la souris
-});
-
-//récuperer les valeur  pour les mettre dans un object  
+   //récuperer les valeur  pour les mettre dans un object  
    let objProduitPanier = {
      idProduitPanier:id,
      quantitéProduitPannier: quantity.textContent,
-    // colorProduitPanier:selectElement.textContent
+    colorProduitPanier:selectColor
    }
-const test13 = console.log(objProduitPanier.quantitéProduitPannier); 
+  
 
-//Créer un local storage  memorise l'object
+   //Créer un local storage  memorise l'object
    let objPannier = JSON.stringify(objProduitPanier);
    localStorage.setItem("obj",objPannier);
 
-
-/*lecture pannier en page pannier
-let objPannier1 = localStorage.getItem("obj");
-let objProduitPanier1 = JSON.parse(objPannier1);
-const test12 = console.log(objProduitPanier1.quantitéProduitPannier); 
-*/
 });
 
+//lecture pannier en page pannier
+let objPannier1 = localStorage.getItem("obj");
+let objProduitPanier1 = JSON.parse(objPannier1);
+
+const test12 = console.log('localStorage'+ objProduitPanier1.quantitéProduitPannier); 
+const test14 = console.log('localStorage'+objProduitPanier1.idProduitPanier); 
+const test16 = console.log('localStorage'+objProduitPanier1. colorProduitPanier);
 
 
+
+
+//
+
+// propagation
+//const elt = document.getElementById('colors');    // On récupère l'élément sur lequel on veut détecter le clic
+//elt.addEventListener('click', function(event) {     // On écoute l'événement click, notre callback prend un para//mètre que nous avons appelé event ici
+ //   event.preventDefault();                         // On utilise la fonction preventDefault de notre objet event pour empêcher le comportement par défaut de cet élément lors du clic de la souris
+//});

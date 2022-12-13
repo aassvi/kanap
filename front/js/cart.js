@@ -8,9 +8,24 @@
 let objPannier1 = localStorage.getItem("obj");
 let objProduitPanier1 = JSON.parse(objPannier1);
 const test12 = console.log(objProduitPanier1.quantitéProduitPannier); 
-const test13 = console.log(objProduitPanier1.idProduitPanier); 
+const test13 = console.log(objProduitPanier1.idProduitPanier);
+const test15 = console.log(objProduitPanier1.colorProduitPanier);  
 
 
+
+
+// * 2 Fetch avec id produit et affichage elements sur la page
+
+
+let urlKanap = "http://localhost:3000/api/products/" + objProduitPanier1.idProduitPanier;
+
+fetch(urlKanap)
+ .then(function(res) {
+   if (res.ok) {
+     return res.json();                              // promise recupere le resultat de la requete
+    }
+ })
+.then((data) =>{
 
 // cherche la section pointe le curseur vers id= items et cree un link sur element global 
 const myId = document.getElementById('cart__items'); 
@@ -44,15 +59,18 @@ myDiv3.classList.add('cart__item__content__description');
 myArticle.appendChild(myDiv3);
 // creation h2 nom du produit
 const myH2 = document.createElement("h2");
-//myH2 = 
+myH2.h2 = data.name;
+myH2.append(myH2.h2);
 myDiv3.appendChild(myH2);
 // creation p color du produit
 const myP1 = document.createElement("p");
-//myP1 = 
+myP1.p = objProduitPanier1.colorProduitPanier;
+myP1.append(myP1.p);
 myDiv3.appendChild(myP1);
 // creation p prix du produit
 const myP2 = document.createElement("p");
 //myP2 = 
+myP2.innerHTML = data.price+ '€';
 myDiv3.appendChild(myP2);
 
 // creation div class="cart__item__content__settings"
@@ -67,7 +85,7 @@ myDiv5.classList.add('cart__item__content__settings__quantity');
 myArticle.appendChild(myDiv5);
 // creation p quantité
 const myQuantité = document.createElement("p");
-myQuantité.innerText = 'Qté :';
+myQuantité.innerText = 'Qté :'+ objProduitPanier1.quantitéProduitPannier;
 //myP1 = 
 myDiv5.appendChild(myQuantité);
 // creation input quantité
@@ -81,4 +99,4 @@ myDiv6.classList.add('cart__item__content__settings__delete');
 // creation du lien sur article
 myArticle.appendChild(myDiv6);
 
-
+});
