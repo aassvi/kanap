@@ -96,7 +96,7 @@ fetch(urlKanap)
 const button = document.querySelector('button');
 button.addEventListener('click', event => {
  
-  onclick = (event) => { 
+ 
   // array panier avant sauvegarde localstorage
   arrayProduitPanier = new Array(id,quantity.textContent,selectColor);
   const test18 = console.log('avant localstorage'+arrayProduitPanier[0]);  
@@ -109,15 +109,16 @@ button.addEventListener('click', event => {
   // si oui id  color deja presents incremente la quatité
   //if arrayProduitPannier[0] == arrayProduitPannier1[0] &&  arrayProduitPannier[2] == arrayProduitPannier1[2] alors arrayProduitPanier[1]++
   arrayProduitPanier.forEach((element) =>{
-    addQtProduit(element);
+    addQtProduit(element);  // arrayProduitPanier.push(arrayProduitPanier[1])
   });
-  //si non enresgistrement des données dans array  push et sauvegarde en localstorage
+  //si non enresgistrement des données dans array sauvegarde en localstorage
   //else
   // array panier  sauvegarde localstorage
   arrayProduitPanier.forEach((element) =>{
-    addLocalstorage(element);
-});
+    addLocalstorage(element);   //sauvegarde localstorage
+ });
 
+ 
   let arrayPanier = JSON.stringify(arrayProduitPanier);
   localStorage.setItem("obj",arrayPanier); 
   let objPanier = localStorage.getItem("obj");
@@ -126,7 +127,7 @@ button.addEventListener('click', event => {
   const test22 = console.log('localStorage'+ arrayProduitPanier1[1]);
   const test23 = console.log('localStorage'+ arrayProduitPanier1[2]); 
 
-};
+
 
 });
 
