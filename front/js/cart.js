@@ -4,7 +4,7 @@
  * 
  */
 
-//lecture pannier en page pannier
+/*lecture pannier en page pannier
 let objPannier1 = localStorage.getItem("obj");
 let objProduitPanier1 = JSON.parse(objPannier1);
 const test12 = console.log(objProduitPanier1.quantitéProduitPannier); 
@@ -12,12 +12,16 @@ const test13 = console.log(objProduitPanier1.idProduitPanier);
 const test15 = console.log(objProduitPanier1.colorProduitPanier);  
 
 const test16 = console.log(objProduitPanier1["quantitéProduitPannier"]);  
-
-
+*/
+let objPanier = localStorage.getItem("obj");
+let arrayProduitPanier1 = JSON.parse(objPanier);
+const test21 = console.log('localStorage'+ arrayProduitPanier1[0]);
+const test22 = console.log('localStorage'+ arrayProduitPanier1[1]);
+const test23 = console.log('localStorage'+ arrayProduitPanier1[2]); 
 // * 2 Fetch avec id produit et affichage elements sur la page
 
 
-let urlKanap = "http://localhost:3000/api/products/" + objProduitPanier1.idProduitPanier;
+let urlKanap = "http://localhost:3000/api/products/" +  arrayProduitPanier1[0];
 
 fetch(urlKanap)
  .then(function(res) {
@@ -33,7 +37,7 @@ fetch(urlKanap)
     const myArticle = document.createElement("article");
     myArticle.classList.add('cart__item"');
     myArticle.dataset.id= data._id;                                 // dataset attribute id
-    myArticle.dataset.color= objProduitPanier1.colorProduitPanier;  // dataset attribute color produit
+    myArticle.dataset.color= arrayProduitPanier1[2];  // dataset attribute color produit
     // creation du lien sur article
     myId.appendChild(myArticle);
     // div 
@@ -64,7 +68,7 @@ fetch(urlKanap)
     myDiv3.appendChild(myH2);
     // creation p color du produit
     const myP1 = document.createElement("p");
-    myP1.p = objProduitPanier1.colorProduitPanier;
+    myP1.p = arrayProduitPanier1[2];
     myP1.append(myP1.p);
     myDiv3.appendChild(myP1);
     // creation p prix du produit
@@ -85,7 +89,7 @@ fetch(urlKanap)
     myArticle.appendChild(myDiv5);
     // creation p quantité
     const myQuantité = document.createElement("p");
-    myQuantité.innerText = 'Qté :'+ objProduitPanier1.quantitéProduitPannier;
+    myQuantité.innerText = 'Qté :'+ arrayProduitPanier1[1];
     //myP1 = 
     myDiv5.appendChild(myQuantité);
     // creation input quantité

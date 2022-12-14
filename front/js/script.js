@@ -20,7 +20,7 @@ function createKanap(kanap) {
     const produitId2 = console.log(a.href);
     
     
-     document.getElementById('items').appendChild(a);
+    document.getElementById('items').appendChild(a);
 
     // creation article
     const myArticle = document.createElement("article");

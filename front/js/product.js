@@ -36,7 +36,7 @@ fetch(urlKanap)
    // construction element enfant div image et attribut alt
    const myDiv = document.getElementById('item__img');
    const myImg = document.createElement("img");
-   myDiv.appendChild(myImg);
+   //myDiv.appendChild(myImg);
    myImg.src=data.imageUrl
    myImg.alt = data.altTxt; 
 
@@ -96,46 +96,47 @@ fetch(urlKanap)
 const button = document.querySelector('button');
 button.addEventListener('click', event => {
  
+  onclick = (event) => { 
+  // array panier avant sauvegarde localstorage
+  arrayProduitPanier = new Array(id,quantity.textContent,selectColor);
+  const test18 = console.log('avant localstorage'+arrayProduitPanier[0]);  
+  const test19 = console.log('avant localstorage'+arrayProduitPanier[1]);
+  const test20 = console.log('avant localstorage'+arrayProduitPanier[2]);
 
-  //récuperer id color et quantite produit pour les mettre dans un object  array/tableau
-  let objProduitPanier = {
-    "idProduitPanier":id,
-    "quantitéProduitPannier": quantity.textContent,
-    "colorProduitPanier":selectColor
-  }
-
-  const test16 = console.log(objProduitPanier["idProduitPanier"]);  
-
-
-  //objProduitPanier.push("x");
-
-  // array
-  arrayProduitPannier = new Array(id,quantity.textContent,selectColor);
-  const test18 = console.log(arrayProduitPannier[2]);  
-  arrayProduitPannier.push("x");
-  const test19 = console.log(arrayProduitPannier[3]);
-  let arrayPannier = JSON.stringify(arrayProduitPannier);
-   localStorage.setItem("obj",arrayPannier); 
-   let arrayPannier1 = localStorage.getItem("obj");
-   let arrayProduitPanier1 = JSON.parse(arrayPannier1);
-   const test21 = console.log('localStorage'+ arrayProduitPannier[0]);
-   const test22 = console.log('localStorage'+ arrayProduitPannier[1]);
-   const test23 = console.log('localStorage'+ arrayProduitPannier[2]); 
-
-
-  onclick = (event) => { };
-  // on verifie si les donnes etaient deja presentes dans l'array pannier
-  // si oui id et color deja presents incremente la quatité
-  // si non enresgistrement des données dans array  push et sauvegarde en localstorage 
-  //if 
-
-  //else
   
-   //Créer un local storage  memorise l'object
-   let objPannier = JSON.stringify(objProduitPanier);
-   localStorage.setItem("obj",objPannier);
+ 
+  // on verifie si les donnees etaient deja presentes dans l'array pannier 
+  // si oui id  color deja presents incremente la quatité
+  //if arrayProduitPannier[0] == arrayProduitPannier1[0] &&  arrayProduitPannier[2] == arrayProduitPannier1[2] alors arrayProduitPanier[1]++
+  arrayProduitPanier.forEach((element) =>{
+    addQtProduit(element);
+  });
+  //si non enresgistrement des données dans array  push et sauvegarde en localstorage
+  //else
+  // array panier  sauvegarde localstorage
+  arrayProduitPanier.forEach((element) =>{
+    addLocalstorage(element);
+});
+
+  let arrayPanier = JSON.stringify(arrayProduitPanier);
+  localStorage.setItem("obj",arrayPanier); 
+  let objPanier = localStorage.getItem("obj");
+  let arrayProduitPanier1 = JSON.parse(objPanier);
+  const test21 = console.log('localStorage'+ arrayProduitPanier1[0]);
+  const test22 = console.log('localStorage'+ arrayProduitPanier1[1]);
+  const test23 = console.log('localStorage'+ arrayProduitPanier1[2]); 
+
+};
 
 });
+
+
+
+
+
+//Créer un local storage  memorise l'object
+//let objPannier = JSON.stringify(objProduitPanier);
+//localStorage.setItem("obj",objPannier);
 
 /*lecture pannier en page pannier
 let objPannier1 = localStorage.getItem("obj");
@@ -145,12 +146,6 @@ const test12 = console.log('localStorage'+ objProduitPanier1.quantitéProduitPan
 const test14 = console.log('localStorage'+objProduitPanier1.idProduitPanier); 
 const test16 = console.log('localStorage'+objProduitPanier1. colorProduitPanier);
 //const test17 = console.log('localStorage'+objProduitPanier1.nomProduitPanier);
-
-
-
-
-//
-
 // propagation
 //const elt = document.getElementById('colors');    // On récupère l'élément sur lequel on veut détecter le clic
 //elt.addEventListener('click', function(event) {     // On écoute l'événement click, notre callback prend un para//mètre que nous avons appelé event ici
