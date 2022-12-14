@@ -31,3 +31,23 @@ fetch("http://localhost:3000/api/products")        //http://localhost:3000/api/p
 });
 
 //.catch((err) => (console.log(err));
+
+   // alimentation des variables avec les valeurs de l'APi
+   img.scr = kanap.imageUrl;
+   img.alt = kanap.altTxt;
+   //img.scr ="/back/images/kanap07.jpeg";
+   const test1 = console.log(img);
+   
+   img.setAttribute("scr",img.scr);
+
+   //img.alt = kanap.altTxt+", "+kanap.name; 
+   //  const test = console.log(img.scr);
+
+  
+   // creation du lien enfant image et alt au parent article 
+   a.append(img);
+   myArticle.appendChild(img); 
+  
+   
+   //  let result = console.log(img.replaceAll('http://localhost:3000/', "/back/"));
+   //console.log(img.replaceAll('http://localhost:3000/', "/back/"));

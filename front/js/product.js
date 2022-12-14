@@ -32,21 +32,16 @@ fetch(urlKanap)
 .then((data) =>{
    const test1 = console.table(data.colors);
 
-   /*image produit
-   const myImg = document.getElementByClass("item");
-   const test8 = console.log(myImg);
-   // construction element enfant article image et attribut alt
-   const img = document.createElement("img");
-   // alimentation des variables avec les valeurs de l'APi
-    img.scr = data.imageUrl;
-    const testim = console.log(img);
-    img.setAttribute("scr",img.scr);
-    img.alt = data.altTxt; 
-      const test = console.log(img.scr);
-    // creation du lien enfant image et alt au parent article 
-    article.append(img);
-    article.appendChild(img);
-   */
+   
+   // construction element enfant div image et attribut alt
+   const myDiv = document.getElementById('item__img');
+   const myImg = document.createElement("img");
+   myDiv.appendChild(myImg);
+   myImg.src=data.imageUrl
+   myImg.alt = data.altTxt; 
+
+   const col5= console.log(data.imageUrl);
+
    //nom produit
    const titleProduct = document.getElementById('title');
    titleProduct.innerHTML = data.name;
@@ -100,13 +95,35 @@ fetch(urlKanap)
 //ajout dans le panier Ecouter le bouton 
 const button = document.querySelector('button');
 button.addEventListener('click', event => {
+ 
 
-  //récuperer les valeur  pour les mettre dans un object  
+  //récuperer id color et quantite produit pour les mettre dans un object  array/tableau
   let objProduitPanier = {
-    idProduitPanier:id,
-    quantitéProduitPannier: quantity.textContent,
-    colorProduitPanier:selectColor
+    "idProduitPanier":id,
+    "quantitéProduitPannier": quantity.textContent,
+    "colorProduitPanier":selectColor
   }
+
+  const test16 = console.log(objProduitPanier["idProduitPanier"]);  
+
+
+  //objProduitPanier.push("x");
+
+  // array
+  arrayProduitPannier = new Array(id,quantity.textContent,selectColor);
+  const test18 = console.log(arrayProduitPannier[2]);  
+  arrayProduitPannier.push("x");
+  const test19 = console.log(arrayProduitPannier[3]);
+  let arrayPannier = JSON.stringify(arrayProduitPannier);
+   localStorage.setItem("obj",arrayPannier); 
+   let arrayPannier1 = localStorage.getItem("obj");
+   let arrayProduitPanier1 = JSON.parse(arrayPannier1);
+   const test21 = console.log('localStorage'+ arrayProduitPannier[0]);
+   const test22 = console.log('localStorage'+ arrayProduitPannier[1]);
+   const test23 = console.log('localStorage'+ arrayProduitPannier[2]); 
+
+
+  onclick = (event) => { };
   // on verifie si les donnes etaient deja presentes dans l'array pannier
   // si oui id et color deja presents incremente la quatité
   // si non enresgistrement des données dans array  push et sauvegarde en localstorage 
@@ -120,7 +137,7 @@ button.addEventListener('click', event => {
 
 });
 
-//lecture pannier en page pannier
+/*lecture pannier en page pannier
 let objPannier1 = localStorage.getItem("obj");
 let objProduitPanier1 = JSON.parse(objPannier1);
 
@@ -139,3 +156,4 @@ const test16 = console.log('localStorage'+objProduitPanier1. colorProduitPanier)
 //elt.addEventListener('click', function(event) {     // On écoute l'événement click, notre callback prend un para//mètre que nous avons appelé event ici
  //   event.preventDefault();                         // On utilise la fonction preventDefault de notre objet event pour empêcher le comportement par défaut de cet élément lors du clic de la souris
 //});
+*/

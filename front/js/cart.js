@@ -11,7 +11,7 @@ const test12 = console.log(objProduitPanier1.quantitéProduitPannier);
 const test13 = console.log(objProduitPanier1.idProduitPanier);
 const test15 = console.log(objProduitPanier1.colorProduitPanier);  
 
-
+const test16 = console.log(objProduitPanier1["quantitéProduitPannier"]);  
 
 
 // * 2 Fetch avec id produit et affichage elements sur la page
@@ -43,9 +43,9 @@ fetch(urlKanap)
     myArticle.appendChild(myDiv);
     // creation img
     const img = document.createElement("img");
-    //img.scr = kanap.imageUrl;
-    //img.setAttribute("scr",img.scr);
-    //img.alt = kanap.altTxt+", "+kanap.name; 
+    myArticle.appendChild(img);
+    img.src=data.imageUrl
+    img.alt = data.altTxt+", "+data.name;  
     myDiv.appendChild(img);
     // creation div class="cart__item__content"
     const myDiv2 = document.createElement("div");
