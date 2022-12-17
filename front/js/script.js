@@ -55,10 +55,10 @@ function createKanap(kanap) {
     
 }
    
- const url = ("http://localhost:3000/api/products");
+const url = ("http://localhost:3000/api/products");
 
 
- fetch(url)
+fetch(url)
  .then(function(res) {
    if (res.ok) {
      return res.json();                              // promise recupere le resultat de la requete
