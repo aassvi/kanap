@@ -83,7 +83,8 @@ function afficheProductAPILS(product,product_panier){
   myDiv3.appendChild(myP1);
   // creation p prix du produit
   const myP2 = document.createElement("p");
-  //myP2 = 
+  //myP2 = parseFloat(string)
+
   myP2.innerHTML = product.price+ '€';
   myDiv3.appendChild(myP2);
   // creation div class="cart__item__content__settings"
@@ -131,13 +132,15 @@ function afficheProductAPILS(product,product_panier){
   const totalQuantity = document.getElementById('totalQuantity');
   numberProduit = getNumberProduct();
   const getnumber = console.table('apres function get number produits  total produits ='+ numberProduit);
-  totalQuantity.append(numberProduit);
+  totalQuantity.replaceChildren(numberProduit);
   
   // Affiche le prix total pour le nombre de produits
   //const price = console.table('apres function get number produits  total produits ='+ product.price);
+  let price = product.price;
+  const price2 = console.log( ' avant getTotalPrice function price =' + product.price);
   const totalPrix = document.getElementById('totalPrice');
-  total  = getTotalPrice();
-  totalPrix.append(total);
+  total  = getTotalPrice(price);
+  totalPrix.replaceChildren(total);
   //const tesTotalget = console.table('apres function get number produits  total produits ='+total);
 
 
@@ -160,9 +163,8 @@ function afficheProductAPILS(product,product_panier){
       input =product_panier.quantiteProduitPanier ;
       const col1 = console.log("pas de changement de quantite " +input);
     }else{
-      numberProduit=  changeQuantity(product,quantity);
+      numberProduit=  changeQuantity(product,product_panier,quantity);
   
-      
       // inserer le total dans le DOM
       const totalProduit = document.getElementById('totalQuantity');
       numberProduit = getNumberProduct();
@@ -174,7 +176,7 @@ function afficheProductAPILS(product,product_panier){
       // Affiche le prix total pour le nombre de produits
       //const price = console.table('apres function get number produits  total produits ='+ product.price);
       const totalPrix = document.getElementById('totalPrice');
-      total = getTotalPrice();
+      total = getTotalPrice(price);
       //const pricetotal = console.table('apres function get number produits  total produits ='+total);
       totalPrix.replaceChildren(total);
       //const tesTotalget = console.table('apres function get number produits  total produits ='+total);
@@ -249,6 +251,17 @@ function removeProductPanier(product){
   }
 }
 
+function changeQuantity(product,product_panier,quantity){
+  let panier = getPanierLS();
+  let foundProduct = panier.find(p =>p.idProduitPanier == product._id && p.colorProduitPanier== product_panier.colorProduitPanier);
+  if (foundProduct != undefined){
+    foundProduct.quantiteProduitPanier = quantity;
+    
+    
+  }
+  savePanierLS(panier);
+}
+/*
 function changeQuantity(product,quantity){
 
   if (quantity > "0"){
@@ -259,23 +272,26 @@ function changeQuantity(product,quantity){
   }
   return quantity;
 }
-
-
+*/
 function getNumberProduct(){
   let panier = getPanierLS();
-  let total_quantity=0;
+  let number = 0;
   for (let product of panier){
-    total_quantity = total_quantity + product.quantiteProduitPanier;
-    const quantiteProduit = console.log( ' getnumberproduct function  :' + product.quantiteProduitPanier)
+    number = number + Number(product.quantiteProduitPanier) ;
   }
-  return total_quantity;
+  return number;
 }
 
-function getTotalPrice(){
+function getTotalPrice(price){
   let panier =getPanierLS();
   let total = 0;
   for (let product of panier) {
-    total = total + product.quantiteProduitPanier * product.price;
+    let quantite = Number(product.quantiteProduitPanier);
+    let prix= Number(price);
+    total = quantite * prix;
+    const pri = console.log( ' getTotalPrice function prix =' + prix);
+    const qunat = console.log( ' getTotalPrice function  quantite = ' +  product.quantiteProduitPanier);
+    const totalPrix = console.log( ' getTotalPrice function  total = ' +  total);
   }
   return total;
 }
