@@ -26,8 +26,10 @@ function getPanierLS(){
      }
    }
    
-   panier = getPanierLS();
+     //panier = getPanierLS();
    
+   
+   let panier = JSON.parse(localStorage.getItem("panier"));  
    /**
    * 
    * @param {*} product 
@@ -35,7 +37,7 @@ function getPanierLS(){
    *
    * insertion elements html dans le DOM avec javascript
    */
-function afficheProductAPILS(product,product_panier){
+   function afficheProductAPILS(product,product_panier){
      
      const myId = document.getElementById('cart__items'); 
      // creation article //
@@ -45,6 +47,7 @@ function afficheProductAPILS(product,product_panier){
      const datasetid = console.log('debug affiche panier dataset id   '+product._id);           // dataset attribute id
      myArticle.dataset.color= product_panier.colorProduitPanier;                                // attribute color produit   // panier.colorProduitPanier
      const datasetcolor = console.log('debug affiche panier dataset color '+product_panier.colorProduitPanier);    
+     
      // creation du lien sur article
      myId.appendChild(myArticle);
      // div 
@@ -100,8 +103,8 @@ function afficheProductAPILS(product,product_panier){
      myInput.name = "itemQuantity";
      myInput.min = "1";
      myInput.max = "100";
-     myInput.value = product_panier.quantiteProduitPanier; 
-     myInput.innerHTML = myInput.value;                          // panier.quantiteProduitPanier
+     myInput.value = product_panier.quantiteProduitPanier;                           // panier.quantiteProduitPanier
+     const valqt = console.log('debug affiche panier quantiteProduitPanier '+product_panier.quantiteProduitPanier);
      myDiv5.appendChild(myInput);
      // creation div 
      const myDiv6 = document.createElement("div");
@@ -114,88 +117,32 @@ function afficheProductAPILS(product,product_panier){
      myDiv4.appendChild(myDiv6);
      // fin creation article //
     
+     
     
    
-}  
-/**
-   * 
-   * @param {*} product 
-   * @param {*} product_panier 
-   * 
-   * Function change quantite 
-   * Cibler le bon produit à suprimer/modifier avec elementClosest et dataset et color sur class="cart__item"
-*/
-function checkQuantity(){
-       
-     const formQuantity = document.getElementById("cart__items");
-     formQuantity.addEventListener('change',(event) =>{
-
-          if (event.target.tagName === "INPUT") {
-               // Récupération du div parent de l'élément cliqué
-               const item = event.target.closest(".cart__item");
-         
-               // Récupération des données du div
-               const id = item.dataset.id;
-               const color = item.dataset.color;
-               const ide = console.log(" function ChangeQuantity event.target.tagName id  " + id);
-               const colorr = console.log(" function ChangeQuantity event.target.tagName color  =  " + color);
-         
-               // Affichage des données du div
-               console.log(`ID : ${id} - Color : ${color}`);
-               
-          nouvelleQuantity =  event.target.value;
-          const nouqnQT = console.log(" function ChangeQuantity nouvelle quantite =  " + nouvelleQuantity);
+   }
+   
+ 
+   function checkDelete(product){
+      /**
+     * function suprime 
+     * Button Supprime produit 
+     * Si button cliqué - produit supprimé localstorage et DOM  supprime produit du panier - 
+     */
+      
+      const suprim = document.querySelector('.deleteItem');
+      suprim.addEventListener('click', event => {
+          //const testidsup = console.log('produit à supprimer '+product._id);
+          removeProductPanier(product);
+          window.location.reload();
           
-          // Mise à jour de la quantité dans l'objet du panier
-           
-          let panier = getPanierLS();
-          let foundProduct = panier.find(p =>p.idProduitPanier == id && p.colorProduitPanier == color);
-               if (foundProduct != undefined ){
-                 foundProduct.quantiteProduitPanier = nouvelleQuantity;
-                 if(foundProduct.quantiteProduitPanier<=0){
-                   removeProductPanier(foundProduct);
-                 }else{
-                   savePanierLS(panier);
-                   window.location.reload();
-                 }
-               }  
-          }       
-         
-     })  
-}
+          //const tesqt = console.table('apres function remove produit en localstorage quantity ='+quantity);
+          //let myTotal = myTotal - quantity;
+          //const tesTotal = console.table('apres function remove produits total produits ='+ myTotal);
+      });
    
+   }
    
-function checkDelete(){
-     /**
-    * function suprime 
-    * Button Supprime produit 
-    * Si button cliqué - produit supprimé localstorage et DOM  supprime produit du panier - 
-    */
-     
-     
-     document.addEventListener('click',(event) =>{
-          if (event.target.className === "deleteItem") {
-               // Récupération du div parent de l'élément cliqué
-               const item = event.target.closest('.cart__item');
-               // Récupération des données du div
-               const id = item.dataset.id;
-               const color = item.dataset.color;
-               const ide = console.log(" function Delete event.target.tagName id  " + id);
-               const colorr = console.log(" function Delete event.target.tagName color  =  " + color);               
-              
-               
-               let panier = getPanierLS();
-               // const test133 = console.table('remove function  '+ product._id);
-               panier = panier.filter(p => p.idProduit != id && p.colorProduitPanier != color);
-               savePanierLS(panier);
-               window.location.reload();
-               }
-          
-     });
-     
-   
-}
-    
    /**
     * Affiche le nombre total de produits(articles) et prix total dans le DOM
     */
@@ -205,6 +152,7 @@ function checkDelete(){
      const totalPrix = document.getElementById('totalPrice');
      totalPrix.replaceChildren(totalprice);
    }
+   
    /**
     *  Boucle sur le tableau panier pour afficher les produits avec id localstorage
     * 
@@ -224,17 +172,105 @@ function checkDelete(){
      .then((data) =>{
        const test5 = console.table(data);
        afficheProductAPILS(data,canape);           // data API et canapes dans le Localstorage
+       
+       checkDelete(canape)
        totalprice = totalprice + Number(data.price) * Number(canape.quantiteProduitPanier);
        totalquantity = totalquantity + Number(canape.quantiteProduitPanier);
        affichetotal()
       
      });
-     checkQuantity();
-     checkDelete();
-     
+    
    }  // fin de boucle for sur tableau objects product panier 
    
-   
+   //checkQuantity();
+     /**
+   * 
+   * @param {*} product 
+   * @param {*} product_panier 
+   * 
+   * Function change quantite 
+   * Cibler le bon produit à suprimer/modifier avec elementClosest et dataset et color sur class="cart__item"
+   */
+    // function checkQuantity(product){
+          //const el = document.getElementByClassName('itemQuantity');
+          //const closestArticle = el.closest('article > div');
+          
+          //const el = document.querySelectorAll(".itemQuantity");
+          //const elementClosest = console.log(el.closest(".cart__item"));
+          
+     
+          const formQuantity = document.querySelectorAll(".itemQuantity");
+
+          panier = getPanierLS();
+         
+          let foundProduct = panier.find(p =>p.idProduitPanier == panier._id && p.colorProduitPanier== panier.colorProduitPanier);
+          
+          const tetid = console.log('changeQuantitylocalStorage  '+ foundProduct[0]);
+         
+          formQuantity[foundProduct].addEventListener('change',(event) =>{
+               if (formQuantity[foundProductfoundProduct].value>0){
+            
+                    nouvelleQuantity =  event.target.value;
+                    const nouqnQT = console.log(" function ChangeQuantity nouvelle quantite =  " + nouvelleQuantity);
+                    ancienneQuantity = panier.quantiteProduitPanier ;
+                    const ancQT = console.log(" function ChangeQuantity ancienneQuantity =  " + ancienneQuantity);
+                    //if (nouvelleQuantity != ancienneQuantity){
+                   
+                    // window.location.reload();
+                    if (foundProduct != undefined){
+                         foundProduct.quantiteProduitPanier = nouvelleQuantity;
+                         if(foundProduct.quantiteProduitPanier<=0){
+                         removeProductPanier(foundProduct);
+                         }else{
+                         savePanierLS(panier);
+                         }
+                    }
+               }
+          });    
+     
+     //
+          //const noe = console.log(" function ChangeQuantity formQuantity =  "+ formQuantity);
+          
+        
+          /* faire la boucle indexer element.addEvent
+      for (let c= 0; c< panier.length; c++){
+          formQuantity[c].addEventListener('change',(event) =>{
+            if (formQuantity[c].value>0){
+            
+               nouvelleQuantity =  event.target.value;
+               const nouqnQT = console.log(" function ChangeQuantity nouvelle quantite =  " + nouvelleQuantity);
+               ancienneQuantity = panier.quantiteProduitPanier ;
+               const ancQT = console.log(" function ChangeQuantity ancienneQuantity =  " + ancienneQuantity);
+               //if (nouvelleQuantity != ancienneQuantity){
+               changeQuantity(product,nouvelleQuantity);
+               // window.location.reload();
+          }
+            //}
+          }) 
+     } 
+    //    }/*
+       /**
+    * 
+    * @param {*} product 
+    * @param {*} product_panier 
+    * @param {*} nouvelleQuantity 
+    */
+   function changeQuantity(product,nouvelleQuantity){
+     let panier = getPanierLS();
+    
+     let foundProduct = panier.find(p =>p.idProduitPanier == product._id && p.colorProduitPanier== product_panier.colorProduitPanier);
+     if (foundProduct != undefined){
+       foundProduct.quantiteProduitPanier = nouvelleQuantity;
+       if(foundProduct.quantiteProduitPanier<=0){
+         removeProductPanier(foundProduct);
+       }else{
+         savePanierLS(panier);
+       }
+       
+     }
+    
+   }
+      
    /**
     * 3. Gestion Pannier 
     *    Ecoute button supprime quantite ou delete produit
@@ -252,5 +288,37 @@ function checkDelete(){
        panier = [];
      }
    }
-  
+   /**
+    * 
+    * @param {*} product 
+    * 
+    * sauvegarde le panier en excluant le produit passé en parametre  
+    */
+   function removeProductPanier(product){
+     let panier = getPanierLS();
+     // const test133 = console.table('remove function  '+ product._id);
+     panier = panier.filter(p => p.idProduit != product._id);
+     savePanierLS(panier);
+   }
+ 
+   
+   /*
+   function changeQuantity(product,quantity){
+   
+     if (quantity > "0"){
+       if (product != undefined){
+         panier[0].quantiteProduitPanier=quantity;
+       }  
+       savePanierLS(panier);
+     }
+     return quantity;
+   }
+   */
+   
+   
+    const testid = console.log('localStorage'+ panier[0].idProduitPanier);
+    const testqt = console.log('localStorage'+ panier.quantiteProduitPanier);
+    const testco = console.log('localStorage'+ panier.colorProduitPanier);
+   
+   
    
