@@ -262,7 +262,6 @@ function affichetotal(){
 let myForm = document.querySelector("form");
 
 myForm.addEventListener('submit', function(e){
-  const t9  = console.log("contact----------------------------");
   const firstName = document.getElementById("firstName");
   const firstNameRegex = /^[a-zA-Z-\s]+$/;
   if (firstName.value.trim() == ""){
@@ -317,14 +316,11 @@ myForm.addEventListener('submit', function(e){
   const email = document.getElementById("email");
   const emailRegex = /^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}$/;
   if (email.value.trim() == ""){
-    const emailErrorMsg = document.getElementById("emailErrorMsg");
-    emailErrorMsg.innerHTML='Email doit comporter un @ et un . quelques lettres apres';
     e.preventDefault();
   } else if (emailRegex.test(email.value) == false) {
     e.preventDefault();
   }
-  const t8  = console.log("contact----------------------------");
-
+  
   // création object avec données de formulaire et le panier 
   let contact = {
     "firstName": document.querySelector("#firstName").value,
@@ -359,7 +355,7 @@ myForm.addEventListener('submit', function(e){
       produits: produits
     }),
   });
-
+  
   // pour voir le résultat du serveur dans la console 
   promised01.then(async(response)=>{
 
@@ -389,12 +385,11 @@ myForm.addEventListener('submit', function(e){
       console.log(e);
     }
   })
-    
 
 });
 
 
-
+   
 
 
 
